@@ -21,7 +21,7 @@ namespace Matrix
 
             // обратная матрица - http://mathprofi.ru/kak_naiti_obratnuyu_matricu.html
             //Console.WriteLine("нахождение обратной матрицы");
-            M3 M3_1 = new M3("D3");
+            M3 M3_1 = new M3("D3.1");
 
             // перемножение матриц
             //Console.WriteLine("перемножение матриц");

@@ -9,6 +9,7 @@ namespace Matrix
         public int columns;
         public double[,] M;
 
+        /*----------------------------------------------------------*/
         // инициализация класса строкой
         public _matrix(string m)
         {
@@ -40,6 +41,7 @@ namespace Matrix
             this.M = matrix;
         }
 
+        /*----------------------------------------------------------*/
         // инициализация класса массивом
         public _matrix(double[,] m)
         {
@@ -48,6 +50,8 @@ namespace Matrix
             this.columns = M.GetLength(1);
         }
 
+
+        /*----------------------------------------------------------*/
         // вывод матрицы на консоль
         public void print_matrix()
         {
@@ -61,7 +65,8 @@ namespace Matrix
             }
         }
 
-        // удаление строки из массива
+        /*----------------------------------------------------------*/
+        // удаление строки из матрицы
         public void delete_row(int dr)
         {
             int row;
@@ -82,7 +87,8 @@ namespace Matrix
             this.rows = this.rows - 1;
         }
 
-        // удаление колонки из массива
+        /*----------------------------------------------------------*/
+        // удаление колонки из матрицы
         public void delete_column(int dc)
         {
             int column;
@@ -102,5 +108,24 @@ namespace Matrix
             this.M = m;
             this.columns = this.columns - 1;
         }
+
+        /*----------------------------------------------------------*/
+        // транспонирование матрицы
+        // строки - в колонки
+        public void transposition()
+        {
+            var m = new double[this.columns, this.rows];
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < this.columns; c++)
+                {
+                    m[c, r] = this.M[r, c];
+                }
+            }
+            this.M = m;
+            this.rows = this.columns;
+            this.columns = this.rows;
+        }
+
     }
 }
