@@ -20,46 +20,87 @@ namespace Matrix
             /**/
 
             // по первой строке определим количество колонок в массиве
-            // обработку на несоответствия количества колонок во всех строках не делаем
+            // обработку на несоответствия количества колонок во всех строках НЕ делаем.
             var first_string = cleanedRows.ElementAt(0).Split(',').Select(c => double.Parse(c.Trim())).ToArray();
 
-            // rows count
-            rows = cleanedRows.Count;
-            // columns count
-            columns = first_string.Length;
+            // rows/columns count
+            this.rows = cleanedRows.Count;
+            this.columns = first_string.Length;
+
             // create matrix from string rows
-            var matrix = new double[rows, columns];
-            for (var r = 0; r <= rows - 1; r++)
+            var matrix = new double[this.rows, this.columns];
+            for (var r = 0; r <= this.rows - 1; r++)
             {
                 var data_row = cleanedRows.ElementAt(r).Split(',').Select(x => double.Parse(x.Trim())).ToArray();
-                for (var c = 0; c <= columns - 1; c++)
+                for (var c = 0; c <= this.columns - 1; c++)
                 {
                     matrix[r, c] = data_row[c];
                 }
             }
-            M = matrix;
+            this.M = matrix;
         }
 
         // инициализация класса массивом
         public _matrix(double[,] m)
         {
-            M = m;
-            rows = M.GetLength(0);
-            columns = M.GetLength(1);
+            this.M = m;
+            this.rows = M.GetLength(0);
+            this.columns = M.GetLength(1);
         }
 
         // вывод матрицы на консоль
         public void print_matrix()
         {
-            for (var r = 0; r <= rows - 1; r++)
+            for (var r = 0; r <= this.rows - 1; r++)
             {
-                for (var c = 0; c <= columns - 1; c++)
-                {
-                    Console.Write($"[{M[r,c]}],");
+                for (var c = 0; c <= this.columns - 1; c++)
+                {                    
+                    Console.Write($"[{M[r,c]}]\t");
+                    if (c == this.columns - 1) { Console.WriteLine(); }
                 }
-                Console.WriteLine("");
             }
         }
 
+        // удаление строки из массива
+        public void delete_row(int dr)
+        {
+            int row;
+            var m = new double[this.rows - 1, this.columns];
+            for ( int c = 0; c < this.columns; c++)
+            {
+                row = -1;
+                for ( int r = 0; r < this.rows; r++)
+                {
+                    if ( dr != r )
+                    {
+                        row++;
+                        m[row,c] = M[r, c];
+                    }
+                }
+            }
+            this.M = m;
+            this.rows = this.rows - 1;
+        }
+
+        // удаление колонки из массива
+        public void delete_column(int dc)
+        {
+            int column;
+            var m = new double[this.rows, this.columns - 1];
+            for (int r = 0; r < rows; r++)
+            {
+                column = -1;
+                for (int c = 0; c < this.columns; c++)
+                {
+                    if (dc != c)
+                    {
+                        column++;
+                        m[r, column] = M[r, c];
+                    }
+                }
+            }
+            this.M = m;
+            this.columns = this.columns - 1;
+        }
     }
 }
