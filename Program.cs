@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Matrix
 {
@@ -21,7 +21,10 @@ namespace Matrix
 
             // обратная матрица - http://mathprofi.ru/kak_naiti_obratnuyu_matricu.html
             //Console.WriteLine("нахождение обратной матрицы");
-            M3 M3_1 = new M3("D3.1");
+            //M3 M3_1 = new M3("D11");
+            //M3 M3_1 = new M3("D11");
+            M3 M3_1 = new M3(10, 10, 10);
+            M3_1.calc();
 
             // перемножение матриц
             //Console.WriteLine("перемножение матриц");
