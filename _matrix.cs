@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Matrix
 {
@@ -50,6 +51,24 @@ namespace Matrix
             this.columns = M.GetLength(1);
         }
 
+        /*----------------------------------------------------------*/
+        // инициализация класса сгенерированным массивом
+        public _matrix(int r, int c, int max)
+        {
+            double minValue = 0;
+            double maxValue = max;
+            Random random = new Random();
+            this.M = new double[r, c];
+            for (var rr = 0; rr <= r - 1; rr++)
+            {
+                for (var cc = 0; cc <= c - 1; cc++)
+                {
+                    this.M[rr,cc] = Math.Round(minValue + (random.NextDouble() * (maxValue - minValue)), 0);
+                }
+            }
+            this.rows = r;
+            this.columns = c;
+        }
 
         /*----------------------------------------------------------*/
         // вывод матрицы на консоль
@@ -106,6 +125,29 @@ namespace Matrix
                 }
             }
             this.M = m;
+            this.columns = this.columns - 1;
+        }
+
+        /*----------------------------------------------------------*/
+        // удаление строки и колонки из матрицы
+        public void delete_rowcol(int dr, int dc)
+        {
+            int row = 0, col = 0;
+            var m = new double[this.rows - 1, this.columns - 1];
+            for (int c = 0; c < this.columns; c++)
+            {
+                col = c >= dc ? -1 : 0;
+                for (int r = 0; r < this.rows; r++)
+                {
+                    row = r >= dr ? -1 : 0;
+                    if ( r != dr && c != dc)
+                    {
+                        m[r + row, c + col] = M[r, c];
+                    }
+                }
+            }
+            this.M = m;
+            this.rows = this.rows - 1;
             this.columns = this.columns - 1;
         }
 
