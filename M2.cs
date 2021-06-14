@@ -8,10 +8,23 @@ namespace Matrix
         /*
          * умножение матрицы на число
          */
-        public M2(string sm)
+        public M2(int input, string sm)
         {
-            _matrix A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm}"));
-            double factor = Convert.ToDouble(ConfigurationManager.AppSettings.Get("M.Factor"));
+            // в зависимости от выбранного способа ввода испольуется значение из конфигурационного файла или считывается с консоли
+            // мнижеитель всегда запрашивается с консоли
+            _matrix A;
+            if (input == 0)
+            {
+                string console;
+                Console.WriteLine("Введите матрицу в JSON формате:");
+                console = Console.ReadLine();
+                A = new _matrix(console);
+            } else
+            {
+                A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm}"));
+            }
+            Console.Write("Введите множитель: ");
+            double factor = Convert.ToDouble(Console.ReadLine());
 
             int rows = A.rows;
             int columns = A.columns;
@@ -27,12 +40,12 @@ namespace Matrix
             }
             _matrix C = new _matrix(m);
 
-            Console.WriteLine("Matrix:");
+            Console.WriteLine("Матрица:");
             A.print_matrix();
 
-            Console.WriteLine($"Factor: {factor}");
+            Console.WriteLine($"Множитель: {factor}");
 
-            Console.WriteLine("Result:");
+            Console.WriteLine("Результат:");
             C.print_matrix();
         }
        

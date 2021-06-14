@@ -8,10 +8,26 @@ namespace Matrix
         /*
          * перемножение матриц - AB
          */
-        public M4(string ma, String mb)
+        public M4(int input, string sm1, String sm2)
         {
-            _matrix A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{ma}"));
-            _matrix B = new _matrix(ConfigurationManager.AppSettings.Get($"M.{mb}"));
+            _matrix A;
+            _matrix B;
+
+            if (input == 0)
+            {
+                string console;
+                Console.WriteLine("Введите матрицу A в JSON формате:");
+                console = Console.ReadLine();
+                A = new _matrix(console);
+                Console.WriteLine("Введите матрицу B в JSON формате:");
+                console = Console.ReadLine();
+                B = new _matrix(console);
+            }
+            else
+            {
+                A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm1}"));
+                B = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm2}"));
+            }
 
             if ( A.columns != B.rows)
             {
@@ -42,13 +58,13 @@ namespace Matrix
                  }
                 
                 _matrix C = new _matrix(m);
-                Console.WriteLine("A:");
+                Console.WriteLine("Матрица A:");
                 A.print_matrix();
 
-                Console.WriteLine("B:");
+                Console.WriteLine("Матрица B:");
                 B.print_matrix();
 
-                Console.WriteLine("Result:");
+                Console.WriteLine("Результат:");
                 C.print_matrix();
             }
            

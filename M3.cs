@@ -13,9 +13,21 @@ namespace Matrix
          * нахождение обратной матрицы   
          * http://www.mathprofi.ru/kak_naiti_obratnuyu_matricu.html
          */
-        public M3(string sm)
+        public M3(int input, string sm)
         {
-            _matrix A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm}"));
+            _matrix A;
+
+            if (input == 0)
+            {
+                string console;
+                Console.WriteLine("Введите матрицу в JSON формате:");
+                console = Console.ReadLine();
+                A = new _matrix(console);
+            }
+            else
+            {
+                A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm}"));
+            }
 
             int rows = A.rows;
             int columns = A.columns;
@@ -28,9 +40,9 @@ namespace Matrix
             {
                 // находим определитель матрицы
                 double d = determinant(A);
-                Console.WriteLine("A:");
+                Console.WriteLine($"Матрица {sm}:");
                 A.print_matrix();
-                Console.WriteLine($"Определитель матрицы:\n{d}");
+                Console.WriteLine($"Определитель матрицы {sm}: {d}");
 
                 if (d == 0)
                 {
@@ -42,7 +54,7 @@ namespace Matrix
                     // будем находить обратную матрицу с помощью алгебраических дополнений
                     // 1. находим матрицу миноров
                     _matrix A_minor = minor(A);
-                    Console.WriteLine($"Минорная матрица:");
+                    Console.WriteLine("Минорная матрица:");
                     A_minor.print_matrix();
 
                     // 2. находим матрицу алгебраических дополнений (меняем знаки)
@@ -79,16 +91,16 @@ namespace Matrix
                             A_minor.M[r, c] = A_minor.M[r, c] * z;
                         }
                     }
-                    Console.WriteLine($"Матрица алгебраических дополнений:");
+                    Console.WriteLine("Матрица алгебраических дополнений:");
                     A_minor.print_matrix();
 
                     // 3. транспонируем матрицу алгебраических дополнений
                     A_minor.transposition();
-                    Console.WriteLine($"Транспонировання матрица:");
+                    Console.WriteLine("Транспонировання матрица:");
                     A_minor.print_matrix();
 
                     // 4. итогом является умножение транспонированной матрицы на 1/определитель
-                    Console.WriteLine($"Обратная матрица:");
+                    Console.WriteLine("Обратная матрица:");
                     Console.WriteLine($"1/{d} *\n(");
                     A_minor.print_matrix();
                     Console.WriteLine(")");

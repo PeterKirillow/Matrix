@@ -5,14 +5,30 @@ namespace Matrix
 {
     public class M1
     {
-        /*
+
+        /* mode
          * 1 - сложение
          * 2 - вычитание
          */
-        public M1(int mode)
+        public M1(int input, int mode, string sm1, string sm2)
         {
-            _matrix A = new _matrix(ConfigurationManager.AppSettings.Get("M.A"));
-            _matrix B = new _matrix(ConfigurationManager.AppSettings.Get("M.B"));
+            // в зависимости от выбранного способа ввода испольуется значение из конфигурационного файла или считывается с консоли
+            _matrix A;
+            _matrix B;
+            if (input == 0 )
+            {
+                string console;
+                Console.WriteLine("Введите матрицу A в JSON формате:");
+                console = Console.ReadLine();
+                A = new _matrix(console);
+                Console.WriteLine("Введите матрицу B в JSON формате:");
+                console = Console.ReadLine();
+                B = new _matrix(console);
+            } else
+            {
+                A = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm1}"));
+                B = new _matrix(ConfigurationManager.AppSettings.Get($"M.{sm2}"));
+            }
 
             if (A.columns != B.columns || A.rows != B.rows)
             {
@@ -39,13 +55,13 @@ namespace Matrix
                 }
                 _matrix C = new _matrix(m);
 
-                Console.WriteLine("A:");
+                Console.WriteLine("Матрица A:");
                 A.print_matrix();
 
-                Console.WriteLine("B:");
+                Console.WriteLine("Матрица B:");
                 B.print_matrix();
 
-                Console.WriteLine("Result:");
+                Console.WriteLine("Результат:");
                 C.print_matrix();
             }
 
